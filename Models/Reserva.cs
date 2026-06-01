@@ -2,10 +2,10 @@ namespace DesafioProjetoHospedagem.Models
 {
     public class Reserva
     {
-        public List<Pessoa> Hospedes { get; set; }
+        public List<Pessoa> Hospedes { get; set; } = new List<Pessoa>();
         public Suite Suite { get; set; }
         public int DiasReservados { get; set; }
-
+        public decimal ValorDesconto { get; set; }
         public Reserva() { }
 
         public Reserva(int diasReservados)
@@ -17,14 +17,16 @@ namespace DesafioProjetoHospedagem.Models
         {
             // TODO: Verificar se a capacidade é maior ou igual ao número de hóspedes sendo recebido
             // *IMPLEMENTE AQUI*
-            if (true)
+            int quantidadeHospedes = hospedes.Count;
+            int capacidadeSuite = Suite.Capacidade;
+
+            if (quantidadeHospedes <=  capacidadeSuite)
             {
-                Hospedes = hospedes;
+                Hospedes.AddRange(hospedes);
             }
             else
             {
-                // TODO: Retornar uma exception caso a capacidade seja menor que o número de hóspedes recebido
-                // *IMPLEMENTE AQUI*
+                throw new Exception("Quantidade de hospedes é maior do que a capacidade da suite.");
             }
         }
 
@@ -35,26 +37,26 @@ namespace DesafioProjetoHospedagem.Models
 
         public int ObterQuantidadeHospedes()
         {
-            // TODO: Retorna a quantidade de hóspedes (propriedade Hospedes)
-            // *IMPLEMENTE AQUI*
-            return 0;
+           
+            return Hospedes.Count;
         }
 
         public decimal CalcularValorDiaria()
         {
-            // TODO: Retorna o valor da diária
-            // Cálculo: DiasReservados X Suite.ValorDiaria
-            // *IMPLEMENTE AQUI*
-            decimal valor = 0;
-
+           
+            decimal valorDaDiaria = (DiasReservados * Suite.ValorDiaria);
+            decimal valorDaDiariaComDesconto = 0;
             // Regra: Caso os dias reservados forem maior ou igual a 10, conceder um desconto de 10%
-            // *IMPLEMENTE AQUI*
-            if (true)
+         
+            if (DiasReservados>=10 )
             {
-                valor = 0;
+                valorDaDiariaComDesconto = valorDaDiaria * 0.90M;
+                ValorDesconto = valorDaDiaria - valorDaDiariaComDesconto;
+                valorDaDiaria = valorDaDiariaComDesconto;
+                
             }
 
-            return valor;
+            return valorDaDiaria;
         }
     }
 }
